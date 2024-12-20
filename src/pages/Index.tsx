@@ -1,4 +1,3 @@
-import { Card } from "@/components/ui/card";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { TrendingUp, ShoppingBag, Package, Percent, Eye, MousePointer, ShoppingCart, Users, Calendar as CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
@@ -7,6 +6,7 @@ import { DateRange } from "react-day-picker";
 import { addDays, format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { KPIContainer } from "@/components/kpi/KPIContainer";
 
 const stats = [
   {
@@ -146,49 +146,16 @@ const Index = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat) => (
-            <Card key={stat.name} className="p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">{stat.name}</p>
-                  {stat.subStats ? (
-                    <div className="mt-2 space-y-1">
-                      {stat.subStats.map((subStat) => (
-                        <div key={subStat.label} className="flex items-center justify-between">
-                          <span className="text-sm text-gray-500">{subStat.label}:</span>
-                          <div>
-                            <span className="text-lg font-semibold">{subStat.value}</span>
-                            <span className={`ml-2 text-sm ${
-                              subStat.change.startsWith('+') ? 'text-green-600' : 'text-red-600'
-                            }`}>
-                              {subStat.change}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="mt-2 text-3xl font-semibold text-gray-900">{stat.value}</p>
-                  )}
-                </div>
-                <div className={`p-3 rounded-full ${
-                  stat.trend === 'up' ? 'bg-green-100' : 'bg-red-100'
-                }`}>
-                  <stat.icon className={`w-6 h-6 ${
-                    stat.trend === 'up' ? 'text-green-600' : 'text-red-600'
-                  }`} />
-                </div>
-              </div>
-              {!stat.subStats && stat.change && (
-                <div className="mt-4">
-                  <span className={`text-sm font-medium ${
-                    stat.trend === 'up' ? 'text-green-600' : 'text-red-600'
-                  }`}>
-                    {stat.change}
-                  </span>
-                  <span className="text-sm text-gray-600"> vs last month</span>
-                </div>
-              )}
-            </Card>
+            <KPIContainer
+              key={stat.name}
+              name={stat.name}
+              value={stat.value}
+              change={stat.change}
+              trend={stat.trend}
+              icon={stat.icon}
+              subStats={stat.subStats}
+              dateRange={date?.from && date?.to ? { from: date.from, to: date.to } : undefined}
+            />
           ))}
         </div>
 
