@@ -7,6 +7,7 @@ import { addDays, format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { KPIContainer } from "@/components/kpi/KPIContainer";
+import { Card } from "@/components/ui/card";
 
 const stats = [
   {
