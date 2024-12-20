@@ -80,36 +80,40 @@ export const KPIPerformanceCharts = ({ kpiName, dateRange, className }: KPIPerfo
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ChartContainer className="h-[300px]" config={{}}>
-              <LineChart data={dailyData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                <XAxis
-                  dataKey="date"
-                  stroke="#888888"
-                  fontSize={12}
-                  tickLine={false}
-                  axisLine={false}
-                  tickFormatter={(value) => format(new Date(value), "MM-dd")}
-                  interval={Math.ceil(dailyData.length / 7)}
-                />
-                <YAxis
-                  stroke="#888888"
-                  fontSize={12}
-                  tickLine={false}
-                  axisLine={false}
-                  tickFormatter={formatValue}
-                  domain={getYAxisDomain()}
-                />
-                <ChartTooltip />
-                <Line
-                  type="monotone"
-                  dataKey="value"
-                  stroke="#1f2937"
-                  strokeWidth={2}
-                  dot={false}
-                />
-              </LineChart>
-            </ChartContainer>
+            <div className="h-[400px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={dailyData} margin={{ top: 10, right: 30, left: 60, bottom: 30 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis
+                    dataKey="date"
+                    stroke="#888888"
+                    fontSize={12}
+                    tickLine={false}
+                    axisLine={false}
+                    tickFormatter={(value) => format(new Date(value), "MM-dd")}
+                    interval={Math.ceil(dailyData.length / 7)}
+                    padding={{ left: 10, right: 10 }}
+                  />
+                  <YAxis
+                    stroke="#888888"
+                    fontSize={12}
+                    tickLine={false}
+                    axisLine={false}
+                    tickFormatter={formatValue}
+                    domain={getYAxisDomain()}
+                    padding={{ top: 20, bottom: 20 }}
+                  />
+                  <ChartTooltip />
+                  <Line
+                    type="monotone"
+                    dataKey="value"
+                    stroke="#1f2937"
+                    strokeWidth={2}
+                    dot={false}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
           </CardContent>
         </Card>
 
@@ -120,35 +124,43 @@ export const KPIPerformanceCharts = ({ kpiName, dateRange, className }: KPIPerfo
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ChartContainer className="h-[300px]" config={{}}>
-              <BarChart data={monthlyData} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" horizontal={true} />
-                <XAxis
-                  type="number"
-                  stroke="#888888"
-                  fontSize={12}
-                  tickLine={false}
-                  axisLine={false}
-                  tickFormatter={formatValue}
-                  domain={getYAxisDomain()}
-                />
-                <YAxis
-                  type="category"
-                  dataKey="date"
-                  stroke="#888888"
-                  fontSize={12}
-                  tickLine={false}
-                  axisLine={false}
-                />
-                <ChartTooltip />
-                <Bar
-                  dataKey="value"
-                  fill="#1f2937"
-                  radius={[0, 4, 4, 0]}
-                  barSize={30}
-                />
-              </BarChart>
-            </ChartContainer>
+            <div className="h-[400px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart 
+                  data={monthlyData} 
+                  layout="vertical"
+                  margin={{ top: 10, right: 30, left: 60, bottom: 30 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" horizontal={true} />
+                  <XAxis
+                    type="number"
+                    stroke="#888888"
+                    fontSize={12}
+                    tickLine={false}
+                    axisLine={false}
+                    tickFormatter={formatValue}
+                    domain={getYAxisDomain()}
+                    padding={{ left: 10, right: 10 }}
+                  />
+                  <YAxis
+                    type="category"
+                    dataKey="date"
+                    stroke="#888888"
+                    fontSize={12}
+                    tickLine={false}
+                    axisLine={false}
+                    width={50}
+                  />
+                  <ChartTooltip />
+                  <Bar
+                    dataKey="value"
+                    fill="#1f2937"
+                    radius={[0, 4, 4, 0]}
+                    barSize={30}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </CardContent>
         </Card>
       </div>
