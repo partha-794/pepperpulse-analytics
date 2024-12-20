@@ -1,36 +1,66 @@
 import { Card } from "@/components/ui/card";
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import { TrendingUp, TrendingDown, Users, ShoppingBag } from "lucide-react";
+import { TrendingUp, ShoppingBag, Package, Percent, Eye, MousePointer, ShoppingCart, Users } from "lucide-react";
 
 const stats = [
   {
-    name: "Total Sales",
+    name: "Total Revenue",
     value: "₹2.4M",
     change: "+12.3%",
+    trend: "up",
+    icon: TrendingUp,
+  },
+  {
+    name: "Average Order Value",
+    value: "₹2,854",
+    change: "+4.5%",
     trend: "up",
     icon: ShoppingBag,
   },
   {
-    name: "Active Users",
-    value: "11.5K",
+    name: "No of Orders",
+    value: "1,243",
     change: "+8.2%",
     trend: "up",
-    icon: Users,
+    icon: Package,
   },
   {
-    name: "Conversion Rate",
-    value: "3.2%",
-    change: "-2.1%",
-    trend: "down",
-    icon: TrendingDown,
-  },
-  {
-    name: "Avg. Order Value",
-    value: "₹2,854",
-    change: "+4.5%",
+    name: "Fulfilment %",
+    value: "94.8%",
+    change: "+2.1%",
     trend: "up",
-    icon: TrendingUp,
+    icon: Percent,
   },
+  {
+    name: "Impressions",
+    value: "125.4K",
+    change: "+15.3%",
+    trend: "up",
+    icon: Eye,
+  },
+  {
+    name: "Clicks",
+    value: "28.6K",
+    change: "+9.7%",
+    trend: "up",
+    icon: MousePointer,
+  },
+  {
+    name: "Add to Cart",
+    value: "4,521",
+    change: "+6.8%",
+    trend: "up",
+    icon: ShoppingCart,
+  },
+  {
+    name: "Sales by Customer Type",
+    value: "",
+    subStats: [
+      { label: "New Customers", value: "65%", change: "+5.2%" },
+      { label: "Returning Customers", value: "35%", change: "-5.2%" }
+    ],
+    icon: Users,
+  }
 ];
 
 const Index = () => {
@@ -48,24 +78,44 @@ const Index = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">{stat.name}</p>
-                  <p className="mt-2 text-3xl font-semibold text-gray-900">{stat.value}</p>
+                  {stat.subStats ? (
+                    <div className="mt-2 space-y-1">
+                      {stat.subStats.map((subStat) => (
+                        <div key={subStat.label} className="flex items-center justify-between">
+                          <span className="text-sm text-gray-500">{subStat.label}:</span>
+                          <div>
+                            <span className="text-lg font-semibold">{subStat.value}</span>
+                            <span className={`ml-2 text-sm ${
+                              subStat.change.startsWith('+') ? 'text-green-600' : 'text-red-600'
+                            }`}>
+                              {subStat.change}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="mt-2 text-3xl font-semibold text-gray-900">{stat.value}</p>
+                  )}
                 </div>
                 <div className={`p-3 rounded-full ${
-                  stat.trend === "up" ? "bg-green-100" : "bg-red-100"
+                  stat.trend === 'up' ? 'bg-green-100' : 'bg-red-100'
                 }`}>
                   <stat.icon className={`w-6 h-6 ${
-                    stat.trend === "up" ? "text-green-600" : "text-red-600"
+                    stat.trend === 'up' ? 'text-green-600' : 'text-red-600'
                   }`} />
                 </div>
               </div>
-              <div className="mt-4">
-                <span className={`text-sm font-medium ${
-                  stat.trend === "up" ? "text-green-600" : "text-red-600"
-                }`}>
-                  {stat.change}
-                </span>
-                <span className="text-sm text-gray-600"> vs last month</span>
-              </div>
+              {!stat.subStats && stat.change && (
+                <div className="mt-4">
+                  <span className={`text-sm font-medium ${
+                    stat.trend === 'up' ? 'text-green-600' : 'text-red-600'
+                  }`}>
+                    {stat.change}
+                  </span>
+                  <span className="text-sm text-gray-600"> vs last month</span>
+                </div>
+              )}
             </Card>
           ))}
         </div>
