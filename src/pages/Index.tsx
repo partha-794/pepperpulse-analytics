@@ -1,10 +1,12 @@
 import { Card } from "@/components/ui/card";
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import { TrendingUp, ShoppingBag, Package, Percent, Eye, MousePointer, ShoppingCart, Users } from "lucide-react";
+import { TrendingUp, ShoppingBag, Package, Percent, Eye, MousePointer, ShoppingCart, Users, Calendar as CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { addDays, format } from "date-fns";
+import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 const stats = [
   {
@@ -82,31 +84,64 @@ const Index = () => {
         </div>
 
         <div className="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm">
-          <div className="flex-1">
-            <h3 className="text-sm font-medium text-gray-600 mb-2">Date Range</h3>
-            <div className="text-sm text-gray-900">
-              {date?.from ? (
-                date.to ? (
-                  <>
-                    {format(date.from, "LLL dd, y")} - {format(date.to, "LLL dd, y")}
-                  </>
-                ) : (
-                  format(date.from, "LLL dd, y")
-                )
-              ) : (
-                "Select a date range"
-              )}
+          <div className="flex items-center gap-3">
+            <div>
+              <h3 className="text-sm font-medium text-gray-600 mb-2">Date Range</h3>
+              <div className="flex items-center gap-2">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="justify-start text-left font-normal"
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {date?.from ? (
+                        format(date.from, "LLL dd, y")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      initialFocus
+                      mode="single"
+                      selected={date?.from}
+                      onSelect={(day) =>
+                        setDate((prev) => ({ from: day, to: prev?.to }))
+                      }
+                    />
+                  </PopoverContent>
+                </Popover>
+                <span className="text-gray-500">to</span>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="justify-start text-left font-normal"
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {date?.to ? (
+                        format(date.to, "LLL dd, y")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      initialFocus
+                      mode="single"
+                      selected={date?.to}
+                      onSelect={(day) =>
+                        setDate((prev) => ({ from: prev?.from, to: day }))
+                      }
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
             </div>
           </div>
-          <Calendar
-            initialFocus
-            mode="range"
-            defaultMonth={date?.from}
-            selected={date}
-            onSelect={setDate}
-            numberOfMonths={2}
-            className="rounded-md border"
-          />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
