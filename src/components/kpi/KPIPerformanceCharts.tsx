@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
-import { Line, LineChart, XAxis, YAxis, ResponsiveContainer } from "recharts";
+import { Line, LineChart, XAxis, YAxis, ResponsiveContainer, BarChart, Bar } from "recharts";
 import { format, subMonths, eachDayOfInterval, eachMonthOfInterval, startOfMonth } from "date-fns";
 
 interface KPIPerformanceChartsProps {
@@ -108,7 +108,7 @@ export const KPIPerformanceCharts = ({ kpiName, dateRange, className }: KPIPerfo
           </CardHeader>
           <CardContent>
             <ChartContainer className="h-[300px]" config={{}}>
-              <LineChart data={monthlyData}>
+              <BarChart data={monthlyData}>
                 <XAxis
                   dataKey="date"
                   stroke="#888888"
@@ -124,14 +124,12 @@ export const KPIPerformanceCharts = ({ kpiName, dateRange, className }: KPIPerfo
                   tickFormatter={formatValue}
                 />
                 <ChartTooltip />
-                <Line
-                  type="monotone"
+                <Bar
                   dataKey="value"
-                  stroke="#8B4513"
-                  strokeWidth={2}
-                  dot={false}
+                  fill="#8B4513"
+                  radius={[4, 4, 0, 0]}
                 />
-              </LineChart>
+              </BarChart>
             </ChartContainer>
           </CardContent>
         </Card>
