@@ -116,65 +116,37 @@ const Index = () => {
           </div>
         </div>
 
-      {selectedStat && (
-        <>
-          <KPIPerformanceCharts
-            kpiName={selectedStat}
-            dateRange={dateRange}
-          />
-          
-          <Card className="mt-6">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <span>Performance Insights</span>
-                {selectedStatData?.change.trend === 'up' ? (
-                  <TrendingUp className="h-5 w-5 text-green-500" />
-                ) : (
-                  <TrendingDown className="h-5 w-5 text-red-500" />
-                )}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-muted-foreground">
-                {selectedStatData?.insight.trend.split(' ').map((word, index) => {
-                  let color = '';
-                  if (word.includes('%') || word.startsWith('+') || word.startsWith('-')) {
-                    if (parseFloat(word) < 0 || word.startsWith('-')) {
-                      color = 'text-red-600';
-                    } else if (parseFloat(word) > 0 || word.startsWith('+')) {
-                      color = 'text-green-600';
-                    }
-                  }
-                  return (
-                    <span key={index} className={color}>
-                      {word}{' '}
-                    </span>
-                  );
-                })}
-              </p>
-              <p className="text-muted-foreground">
-                {selectedStatData?.insight.correlation.split(' ').map((word, index) => {
-                  let color = '';
-                  if (word.includes('%') || word.startsWith('+') || word.startsWith('-')) {
-                    if (parseFloat(word) < 0 || word.startsWith('-')) {
-                      color = 'text-red-600';
-                    } else if (parseFloat(word) > 0 || word.startsWith('+')) {
-                      color = 'text-green-600';
-                    }
-                  }
-                  return (
-                    <span key={index} className={color}>
-                      {word}{' '}
-                    </span>
-                  );
-                })}
-              </p>
-            </CardContent>
-          </Card>
-        </>
-      )}
-    </div>
-  </DashboardLayout>
+        {selectedStat && (
+          <>
+            <KPIPerformanceCharts
+              kpiName={selectedStat}
+              dateRange={dateRange}
+            />
+            
+            <Card className="mt-6">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <span>Performance Insights</span>
+                  {selectedStatData?.change.trend === 'up' ? (
+                    <TrendingUp className="h-5 w-5" />
+                  ) : (
+                    <TrendingDown className="h-5 w-5" />
+                  )}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-muted-foreground">
+                  {selectedStatData?.insight.trend}
+                </p>
+                <p className="text-muted-foreground">
+                  {selectedStatData?.insight.correlation}
+                </p>
+              </CardContent>
+            </Card>
+          </>
+        )}
+      </div>
+    </DashboardLayout>
   );
 };
 
