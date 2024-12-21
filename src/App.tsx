@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import QueryPerformance from "./pages/QueryPerformance";
 import Demographic from "./pages/Demographic";
 import CustomerSegment from "./pages/CustomerSegment";
+import Inventory from "./pages/Inventory";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +22,7 @@ const App = () => (
           <Route path="/query-performance" element={<QueryPerformance />} />
           <Route path="/demographic" element={<Demographic />} />
           <Route path="/customer-segment" element={<CustomerSegment />} />
-          <Route path="/inventory" element={<Index />} />
+          <Route path="/inventory" element={<Inventory />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
