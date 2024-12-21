@@ -81,6 +81,16 @@ const Index = () => {
 
   const selectedStatData = stats.find(stat => stat.title === selectedStat);
 
+  const getNumberColor = (text: string) => {
+    if (text.includes('%')) {
+      const number = parseFloat(text);
+      return number >= 0 ? 'text-green-600' : 'text-red-600';
+    }
+    if (text.startsWith('+')) return 'text-green-600';
+    if (text.startsWith('-')) return 'text-red-600';
+    return '';
+  };
+
   return (
     <DashboardLayout>
       <div className="flex flex-col space-y-8">
@@ -123,7 +133,6 @@ const Index = () => {
               dateRange={dateRange}
             />
             
-            {/* Insights Section */}
             <Card className="mt-6">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -137,10 +146,24 @@ const Index = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
-                  {selectedStatData?.insight.trend}
+                  {selectedStatData?.insight.trend.split(' ').map((word, index) => {
+                    const color = getNumberColor(word);
+                    return (
+                      <span key={index} className={color}>
+                        {word}{' '}
+                      </span>
+                    );
+                  })}
                 </p>
                 <p className="text-muted-foreground">
-                  {selectedStatData?.insight.correlation}
+                  {selectedStatData?.insight.correlation.split(' ').map((word, index) => {
+                    const color = getNumberColor(word);
+                    return (
+                      <span key={index} className={color}>
+                        {word}{' '}
+                      </span>
+                    );
+                  })}
                 </p>
               </CardContent>
             </Card>
