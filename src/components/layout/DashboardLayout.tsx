@@ -1,4 +1,4 @@
-import { SidebarProvider, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
+import { SidebarProvider, Sidebar, SidebarContent } from "@/components/ui/sidebar";
 import { BarChart3, Search, Users, UserCircle, Package2 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -16,40 +16,33 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <SidebarProvider>
       <div className="min-h-screen flex flex-col w-full bg-secondary/30">
-        <div className="flex">
-          <Sidebar>
-            <SidebarContent>
-              <div className="px-6 py-4">
-                <h2 className="text-2xl font-semibold text-primary">Pepperfry Analytics</h2>
-              </div>
-              <SidebarGroup>
-                <SidebarGroupContent>
-                  {navigation.map((item) => (
-                    <SidebarMenuItem key={item.name}>
-                      <SidebarMenuButton asChild>
-                        <Link
-                          to={item.href}
-                          className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
-                            location.pathname === item.href
-                              ? "bg-primary text-white"
-                              : "hover:bg-primary/10"
-                          }`}
-                        >
-                          <item.icon className="h-5 w-5" />
-                          <span>{item.name}</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarGroupContent>
-              </SidebarGroup>
-            </SidebarContent>
-          </Sidebar>
-          <div className="flex-1">
-            <main className="p-8 animate-fade-in">
-              {children}
-            </main>
+        <header className="bg-white border-b">
+          <div className="max-w-screen-2xl mx-auto px-4">
+            <div className="flex items-center justify-between h-16">
+              <h2 className="text-2xl font-semibold text-primary">Pepperfry Analytics</h2>
+              <nav className="flex space-x-1">
+                {navigation.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-md transition-colors ${
+                      location.pathname === item.href
+                        ? "bg-primary text-white"
+                        : "hover:bg-primary/10"
+                    }`}
+                  >
+                    <item.icon className="h-5 w-5" />
+                    <span>{item.name}</span>
+                  </Link>
+                ))}
+              </nav>
+            </div>
           </div>
+        </header>
+        <div className="flex-1">
+          <main className="p-8 animate-fade-in max-w-screen-2xl mx-auto">
+            {children}
+          </main>
         </div>
       </div>
     </SidebarProvider>
