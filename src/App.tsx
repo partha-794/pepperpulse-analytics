@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import QueryPerformance from "./pages/QueryPerformance";
 import Demographic from "./pages/Demographic";
+import CustomerSegment from "./pages/CustomerSegment";
 
 const queryClient = new QueryClient();
 
@@ -19,7 +20,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/query-performance" element={<QueryPerformance />} />
           <Route path="/demographic" element={<Demographic />} />
-          <Route path="/customer-segment" element={<Index />} />
+          <Route path="/customer-segment" element={<CustomerSegment />} />
           <Route path="/inventory" element={<Index />} />
         </Routes>
       </BrowserRouter>
