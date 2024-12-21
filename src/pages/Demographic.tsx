@@ -4,12 +4,13 @@ import { Users, MapPin, UserCircle } from "lucide-react";
 import { useState } from "react";
 import { DatePickerWithRange } from "@/components/ui/date-range-picker";
 import { addDays } from "date-fns";
+import { DateRange } from "react-day-picker";
 import { Card } from "@/components/ui/card";
 
 const Demographic = () => {
-  const [date, setDate] = useState({
+  const [date, setDate] = useState<DateRange>({
     from: addDays(new Date(), -30),
-    to: new Date()
+    to: new Date(),
   });
 
   console.log("Date range selected:", date);
@@ -34,7 +35,7 @@ const Demographic = () => {
             value="32.5"
             change="+2.1%"
             trend="up"
-            dateRange={date}
+            dateRange={{ from: date.from!, to: date.to! }}
             subStats={[
               { label: "18-24", value: "25%", change: "+3.2%" },
               { label: "25-34", value: "35%", change: "+1.8%" },
@@ -49,7 +50,7 @@ const Demographic = () => {
             value="Mumbai"
             change="+15.3%"
             trend="up"
-            dateRange={date}
+            dateRange={{ from: date.from!, to: date.to! }}
             subStats={[
               { label: "Mumbai", value: "28%", change: "+2.1%" },
               { label: "Delhi", value: "22%", change: "+1.5%" },
@@ -64,7 +65,7 @@ const Demographic = () => {
             value="52% F"
             change="+3.2%"
             trend="up"
-            dateRange={date}
+            dateRange={{ from: date.from!, to: date.to! }}
             subStats={[
               { label: "Female", value: "52%", change: "+3.2%" },
               { label: "Male", value: "47%", change: "-2.8%" },
