@@ -1,22 +1,30 @@
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { KPIContainer } from "@/components/kpi/KPIContainer";
 import { Users, MapPin, UserCircle } from "lucide-react";
+import { useState } from "react";
+import { DatePickerWithRange } from "@/components/ui/date-range-picker";
+import { addDays } from "date-fns";
+import { Card } from "@/components/ui/card";
 
 const Demographic = () => {
-  // Sample data - in a real app, this would come from an API
-  const dateRange = {
-    from: new Date(2024, 0, 1),
-    to: new Date(2024, 2, 1)
-  };
+  const [date, setDate] = useState({
+    from: addDays(new Date(), -30),
+    to: new Date()
+  });
+
+  console.log("Date range selected:", date);
 
   return (
     <DashboardLayout>
       <div className="space-y-8">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Demographics</h1>
-          <p className="text-muted-foreground mt-2">
-            Analyze customer demographics across age groups, locations, and gender.
-          </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">Demographics</h1>
+            <p className="text-muted-foreground mt-2">
+              Analyze customer demographics across age groups, locations, and gender.
+            </p>
+          </div>
+          <DatePickerWithRange date={date} setDate={setDate} />
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -26,7 +34,7 @@ const Demographic = () => {
             value="32.5"
             change="+2.1%"
             trend="up"
-            dateRange={dateRange}
+            dateRange={date}
             subStats={[
               { label: "18-24", value: "25%", change: "+3.2%" },
               { label: "25-34", value: "35%", change: "+1.8%" },
@@ -41,7 +49,7 @@ const Demographic = () => {
             value="Mumbai"
             change="+15.3%"
             trend="up"
-            dateRange={dateRange}
+            dateRange={date}
             subStats={[
               { label: "Mumbai", value: "28%", change: "+2.1%" },
               { label: "Delhi", value: "22%", change: "+1.5%" },
@@ -56,7 +64,7 @@ const Demographic = () => {
             value="52% F"
             change="+3.2%"
             trend="up"
-            dateRange={dateRange}
+            dateRange={date}
             subStats={[
               { label: "Female", value: "52%", change: "+3.2%" },
               { label: "Male", value: "47%", change: "-2.8%" },
@@ -66,7 +74,7 @@ const Demographic = () => {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="bg-white p-6 rounded-lg shadow">
+          <Card className="bg-white p-6 rounded-lg shadow">
             <h3 className="text-lg font-semibold mb-4">Key Insights</h3>
             <div className="space-y-4 text-sm text-muted-foreground">
               <p>
@@ -82,7 +90,7 @@ const Demographic = () => {
                 3.2% increase. This shift aligns with our recent marketing initiatives.
               </p>
             </div>
-          </div>
+          </Card>
         </div>
       </div>
     </DashboardLayout>
