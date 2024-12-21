@@ -20,7 +20,7 @@ export const QueryInsights = ({
   avgConversionRate
 }: QueryInsightsProps) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 bg-white">
       <h2 className="text-2xl font-bold">Key Insights</h2>
       
       <div className="prose max-w-none space-y-4 text-muted-foreground">
