@@ -51,14 +51,7 @@ const Index = () => {
 
   return (
     <DashboardLayout>
-      <div className="space-y-8">
-        <div>
-          <h1 className="text-4xl font-bold text-primary">Analytics Overview</h1>
-          <p className="mt-2 text-lg text-muted-foreground">
-            Track your brand's performance and insights
-          </p>
-        </div>
-
+      <div className="space-y-6">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
           {stats.map((stat) => (
             <div
@@ -72,6 +65,13 @@ const Index = () => {
               />
             </div>
           ))}
+        </div>
+
+        <div>
+          <h1 className="text-4xl font-bold text-primary">Analytics Overview</h1>
+          <p className="mt-2 text-lg text-muted-foreground">
+            Track your brand's performance and insights
+          </p>
         </div>
 
         <DateRangeDisplay
