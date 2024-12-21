@@ -6,9 +6,10 @@ import { DatePickerWithRange } from "@/components/ui/date-range-picker";
 import { addDays } from "date-fns";
 import { Card } from "@/components/ui/card";
 import { StatsCard } from "@/components/dashboard/StatsCard";
+import { DateRange } from "react-day-picker";
 
 const Inventory = () => {
-  const [date, setDate] = useState({
+  const [date, setDate] = useState<DateRange>({
     from: addDays(new Date(), -30),
     to: new Date(),
   });
@@ -69,7 +70,7 @@ const Inventory = () => {
             value="1,234"
             change="+15.2%"
             trend="up"
-            dateRange={date}
+            dateRange={date.from && date.to ? { from: date.from, to: date.to } : undefined}
             subStats={[
               { label: "Inbound", value: "756", change: "+12.3%" },
               { label: "Outbound", value: "478", change: "+18.1%" },
@@ -81,7 +82,7 @@ const Inventory = () => {
             value="78%"
             change="+5.5%"
             trend="up"
-            dateRange={date}
+            dateRange={date.from && date.to ? { from: date.from, to: date.to } : undefined}
             subStats={[
               { label: "Used Space", value: "3,450 sqft", change: "+8.2%" },
               { label: "Available", value: "950 sqft", change: "-15.3%" },
