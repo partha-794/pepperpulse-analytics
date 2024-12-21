@@ -25,6 +25,21 @@ const stats = [
     value: "45,678",
     change: { value: "8%", trend: "up" as const },
   },
+  {
+    title: "Average Order Value",
+    value: "$256",
+    change: { value: "3%", trend: "up" as const },
+  },
+  {
+    title: "Returns",
+    value: "234",
+    change: { value: "1%", trend: "down" as const },
+  },
+  {
+    title: "Customer Satisfaction",
+    value: "4.8/5",
+    change: { value: "4%", trend: "up" as const },
+  },
 ];
 
 const Index = () => {
@@ -44,7 +59,7 @@ const Index = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
           {stats.map((stat) => (
             <div
               key={stat.title}
