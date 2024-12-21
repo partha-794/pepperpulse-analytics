@@ -7,22 +7,22 @@ import { useState } from "react";
 const stats = [
   {
     title: "Total Revenue",
-    value: "₹82,234",
+    value: "₹1,82,234",
     change: { value: "5%", trend: "up" as const },
   },
   {
     title: "Average Order Value",
-    value: "₹91,234",
+    value: "₹1,234",
     change: { value: "12%", trend: "up" as const },
   },
   {
     title: "No of Orders",
-    value: "12,345",
+    value: "1,345",
     change: { value: "2%", trend: "down" as const },
   },
   {
     title: "Fulfilment %",
-    value: "89%",
+    value: "92%",
     change: { value: "8%", trend: "up" as const },
   },
   {
@@ -37,7 +37,7 @@ const stats = [
   },
   {
     title: "Add to Cart",
-    value: "4.8/5",
+    value: "2,145",
     change: { value: "4%", trend: "up" as const },
   },
 ];
