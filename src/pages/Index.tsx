@@ -1,8 +1,10 @@
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { StatsCard } from "@/components/dashboard/StatsCard";
 import { DateRangeDisplay } from "@/components/dashboard/DateRangeDisplay";
+import { KPIContainer } from "@/components/kpi/KPIContainer";
 import { KPIPerformanceCharts } from "@/components/kpi/KPIPerformanceCharts";
 import { useState } from "react";
+import { DollarSign, ShoppingCart, Percent } from "lucide-react";
 
 const stats = [
   {
@@ -59,17 +61,48 @@ const Index = () => {
           ))}
         </div>
 
-        <DateRangeDisplay
-          startDate={dateRange.from}
-          endDate={dateRange.to}
-        />
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <div className="lg:col-span-3">
+            <DateRangeDisplay
+              startDate={dateRange.from}
+              endDate={dateRange.to}
+            />
 
-        {selectedStat && (
-          <KPIPerformanceCharts
-            kpiName={selectedStat}
-            dateRange={dateRange}
-          />
-        )}
+            {selectedStat && (
+              <KPIPerformanceCharts
+                kpiName={selectedStat}
+                dateRange={dateRange}
+              />
+            )}
+          </div>
+          
+          <div className="space-y-4">
+            <KPIContainer
+              name="Total Revenue"
+              value="₹45,231"
+              change="+12%"
+              trend="up"
+              icon={DollarSign}
+              dateRange={dateRange}
+            />
+            <KPIContainer
+              name="Orders"
+              value="1,234"
+              change="+8%"
+              trend="up"
+              icon={ShoppingCart}
+              dateRange={dateRange}
+            />
+            <KPIContainer
+              name="Conversion Rate"
+              value="3.2%"
+              change="-2%"
+              trend="down"
+              icon={Percent}
+              dateRange={dateRange}
+            />
+          </div>
+        </div>
       </div>
     </DashboardLayout>
   );
