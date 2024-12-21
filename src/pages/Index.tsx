@@ -81,24 +81,6 @@ const Index = () => {
 
   const selectedStatData = stats.find(stat => stat.title === selectedStat);
 
-  const getNumberColor = (text: string) => {
-    // Check for percentage values
-    if (text.includes('%')) {
-      const number = parseFloat(text);
-      if (text.toLowerCase().includes('decrease') || number < 0) {
-        return 'text-red-600';
-      }
-      if (text.toLowerCase().includes('increase') || number > 0) {
-        return 'text-green-600';
-      }
-      return '';
-    }
-    // Keep existing logic for non-percentage values
-    if (text.startsWith('+')) return 'text-green-600';
-    if (text.startsWith('-')) return 'text-red-600';
-    return '';
-  };
-
   return (
     <DashboardLayout>
       <div className="flex flex-col space-y-8">
@@ -155,7 +137,18 @@ const Index = () => {
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
                   {selectedStatData?.insight.trend.split(' ').map((word, index) => {
-                    const color = getNumberColor(word);
+                    let color = '';
+                    if (word.includes('%')) {
+                      if (word.toLowerCase().includes('decrease') || parseFloat(word) < 0) {
+                        color = 'text-red-600';
+                      } else if (word.toLowerCase().includes('increase') || parseFloat(word) > 0) {
+                        color = 'text-green-600';
+                      }
+                    } else if (word.startsWith('+')) {
+                      color = 'text-green-600';
+                    } else if (word.startsWith('-')) {
+                      color = 'text-red-600';
+                    }
                     return (
                       <span key={index} className={color}>
                         {word}{' '}
@@ -165,7 +158,18 @@ const Index = () => {
                 </p>
                 <p className="text-muted-foreground">
                   {selectedStatData?.insight.correlation.split(' ').map((word, index) => {
-                    const color = getNumberColor(word);
+                    let color = '';
+                    if (word.includes('%')) {
+                      if (word.toLowerCase().includes('decrease') || parseFloat(word) < 0) {
+                        color = 'text-red-600';
+                      } else if (word.toLowerCase().includes('increase') || parseFloat(word) > 0) {
+                        color = 'text-green-600';
+                      }
+                    } else if (word.startsWith('+')) {
+                      color = 'text-green-600';
+                    } else if (word.startsWith('-')) {
+                      color = 'text-red-600';
+                    }
                     return (
                       <span key={index} className={color}>
                         {word}{' '}
