@@ -82,10 +82,18 @@ const Index = () => {
   const selectedStatData = stats.find(stat => stat.title === selectedStat);
 
   const getNumberColor = (text: string) => {
+    // Check for percentage values
     if (text.includes('%')) {
       const number = parseFloat(text);
-      return number >= 0 ? 'text-green-600' : 'text-red-600';
+      if (text.toLowerCase().includes('decrease') || number < 0) {
+        return 'text-red-600';
+      }
+      if (text.toLowerCase().includes('increase') || number > 0) {
+        return 'text-green-600';
+      }
+      return '';
     }
+    // Keep existing logic for non-percentage values
     if (text.startsWith('+')) return 'text-green-600';
     if (text.startsWith('-')) return 'text-red-600';
     return '';
