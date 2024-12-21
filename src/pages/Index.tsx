@@ -6,33 +6,33 @@ import { useState } from "react";
 
 const stats = [
   {
-    title: "Active Users",
-    value: "8,234",
+    title: "New Customer Sales",
+    value: "₹82,234",
     change: { value: "5%", trend: "up" as const },
   },
   {
-    title: "New Users",
-    value: "1,234",
+    title: "Existing Customer Sales",
+    value: "₹91,234",
     change: { value: "12%", trend: "up" as const },
   },
   {
-    title: "Spends",
-    value: "$12,345",
+    title: "Total Orders",
+    value: "12,345",
     change: { value: "2%", trend: "down" as const },
   },
   {
-    title: "Clicks",
+    title: "Website Visits",
     value: "45,678",
     change: { value: "8%", trend: "up" as const },
   },
   {
-    title: "Average Order Value",
-    value: "$256",
+    title: "Cart Additions",
+    value: "5,256",
     change: { value: "3%", trend: "up" as const },
   },
   {
-    title: "Returns",
-    value: "234",
+    title: "Order Success Rate",
+    value: "89%",
     change: { value: "1%", trend: "down" as const },
   },
   {
