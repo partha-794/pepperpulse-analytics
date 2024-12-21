@@ -51,33 +51,38 @@ const Index = () => {
 
   return (
     <DashboardLayout>
-      <div className="space-y-8">
-        <div>
-          <h1 className="text-4xl font-bold text-primary">Analytics Overview</h1>
-          <p className="mt-2 text-lg text-muted-foreground">
-            Track your brand's performance and insights
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
-          {stats.map((stat) => (
-            <div
-              key={stat.title}
-              onClick={() => setSelectedStat(stat.title)}
-              className="cursor-pointer"
-            >
-              <StatsCard
-                {...stat}
-                isSelected={selectedStat === stat.title}
+      <div className="flex flex-col space-y-8">
+        <div className="flex flex-col space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold text-primary">Analytics Overview</h1>
+              <p className="mt-2 text-lg text-muted-foreground">
+                Track your brand's performance and insights
+              </p>
+            </div>
+            <div className="flex-shrink-0">
+              <DateRangeDisplay
+                startDate={dateRange.from}
+                endDate={dateRange.to}
               />
             </div>
-          ))}
-        </div>
+          </div>
 
-        <DateRangeDisplay
-          startDate={dateRange.from}
-          endDate={dateRange.to}
-        />
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
+            {stats.map((stat) => (
+              <div
+                key={stat.title}
+                onClick={() => setSelectedStat(stat.title)}
+                className="cursor-pointer"
+              >
+                <StatsCard
+                  {...stat}
+                  isSelected={selectedStat === stat.title}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
 
         {selectedStat && (
           <KPIPerformanceCharts
