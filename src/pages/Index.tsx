@@ -4,7 +4,7 @@ import { DateRangeDisplay } from "@/components/dashboard/DateRangeDisplay";
 import { KPIContainer } from "@/components/kpi/KPIContainer";
 import { KPIPerformanceCharts } from "@/components/kpi/KPIPerformanceCharts";
 import { useState } from "react";
-import { DollarSign, ShoppingCart, Percent } from "lucide-react";
+import { DollarSign, ShoppingCart, Percent, TrendingUp, TrendingDown, ArrowUp } from "lucide-react";
 
 const stats = [
   {
@@ -99,6 +99,30 @@ const Index = () => {
               change="-2%"
               trend="down"
               icon={Percent}
+              dateRange={dateRange}
+            />
+            <KPIContainer
+              name="Average Order Value"
+              value="₹2,450"
+              change="+5%"
+              trend="up"
+              icon={TrendingUp}
+              dateRange={dateRange}
+            />
+            <KPIContainer
+              name="Returns"
+              value="124"
+              change="-15%"
+              trend="down"
+              icon={TrendingDown}
+              dateRange={dateRange}
+            />
+            <KPIContainer
+              name="Customer Satisfaction"
+              value="4.5/5"
+              change="+0.3"
+              trend="up"
+              icon={ArrowUp}
               dateRange={dateRange}
             />
           </div>
