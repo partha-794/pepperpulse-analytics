@@ -1,21 +1,38 @@
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import { KPIContainer } from "@/components/kpi/KPIContainer";
-import { 
-  DollarSign, 
-  ShoppingCart, 
-  Package, 
-  PercentIcon, 
-  Eye, 
-  MousePointerClick, 
-  ShoppingBag,
-  Users
-} from "lucide-react";
+import { StatsCard } from "@/components/dashboard/StatsCard";
+import { DateRangeDisplay } from "@/components/dashboard/DateRangeDisplay";
+import { KPIPerformanceCharts } from "@/components/kpi/KPIPerformanceCharts";
+import { useState } from "react";
+
+const stats = [
+  {
+    title: "Active Users",
+    value: "8,234",
+    change: { value: "5%", trend: "up" as const },
+  },
+  {
+    title: "New Users",
+    value: "1,234",
+    change: { value: "12%", trend: "up" as const },
+  },
+  {
+    title: "Spends",
+    value: "$12,345",
+    change: { value: "2%", trend: "down" as const },
+  },
+  {
+    title: "Clicks",
+    value: "45,678",
+    change: { value: "8%", trend: "up" as const },
+  },
+];
 
 const Index = () => {
-  const dateRange = {
+  const [selectedStat, setSelectedStat] = useState(stats[0].title);
+  const [dateRange] = useState({
     from: new Date(2024, 0, 1),
-    to: new Date()
-  };
+    to: new Date(2024, 11, 21),
+  });
 
   return (
     <DashboardLayout>
@@ -27,73 +44,32 @@ const Index = () => {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <KPIContainer
-            name="Total Revenue"
-            value="₹45,231"
-            change="+12.5%"
-            trend="up"
-            icon={DollarSign}
-            dateRange={dateRange}
-          />
-          <KPIContainer
-            name="Average Order Value"
-            value="₹2,345"
-            change="+5.2%"
-            trend="up"
-            icon={ShoppingCart}
-            dateRange={dateRange}
-          />
-          <KPIContainer
-            name="No of Orders"
-            value="1,234"
-            change="-2.1%"
-            trend="down"
-            icon={Package}
-            dateRange={dateRange}
-          />
-          <KPIContainer
-            name="Fulfilment %"
-            value="94.5%"
-            change="+1.2%"
-            trend="up"
-            icon={PercentIcon}
-            dateRange={dateRange}
-          />
-          <KPIContainer
-            name="Impressions"
-            value="125.4K"
-            change="+15.3%"
-            trend="up"
-            icon={Eye}
-            dateRange={dateRange}
-          />
-          <KPIContainer
-            name="Clicks"
-            value="45.2K"
-            change="+8.7%"
-            trend="up"
-            icon={MousePointerClick}
-            dateRange={dateRange}
-          />
-          <KPIContainer
-            name="Add to Cart"
-            value="12.3K"
-            change="+6.4%"
-            trend="up"
-            icon={ShoppingBag}
-            dateRange={dateRange}
-          />
-          <KPIContainer
-            name="Sales Distribution"
-            icon={Users}
-            subStats={[
-              { label: "New Customers", value: "65%", change: "+5.2%" },
-              { label: "Old Customers", value: "35%", change: "-5.2%" }
-            ]}
-            dateRange={dateRange}
-          />
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {stats.map((stat) => (
+            <div
+              key={stat.title}
+              onClick={() => setSelectedStat(stat.title)}
+              className="cursor-pointer"
+            >
+              <StatsCard
+                {...stat}
+                isSelected={selectedStat === stat.title}
+              />
+            </div>
+          ))}
         </div>
+
+        <DateRangeDisplay
+          startDate={dateRange.from}
+          endDate={dateRange.to}
+        />
+
+        {selectedStat && (
+          <KPIPerformanceCharts
+            kpiName={selectedStat}
+            dateRange={dateRange}
+          />
+        )}
       </div>
     </DashboardLayout>
   );
