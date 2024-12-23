@@ -9,6 +9,7 @@ import { StatsCard } from "@/components/dashboard/StatsCard";
 import { DateRange } from "react-day-picker";
 import { InventoryStockChart } from "@/components/inventory/InventoryStockChart";
 import { StockoutHeatmap } from "@/components/inventory/StockoutHeatmap";
+import { ProductPerformanceChart } from "@/components/inventory/ProductPerformanceChart";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 const Inventory = () => {
@@ -77,6 +78,8 @@ const Inventory = () => {
             <StockoutHeatmap />
           </Card>
         </div>
+
+        <ProductPerformanceChart />
 
         <Card className="p-6">
           <div className="flex items-center justify-between mb-6">
