@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import { Line, LineChart, XAxis, YAxis, ResponsiveContainer, BarChart, Bar, CartesianGrid } from "recharts";
 import { format, subMonths, eachDayOfInterval, eachMonthOfInterval, startOfMonth } from "date-fns";
+import { OrderMilestonesChart } from "../charts/OrderMilestonesChart";
 
 interface KPIPerformanceChartsProps {
   kpiName: string;
@@ -72,7 +73,7 @@ export const KPIPerformanceCharts = ({ kpiName, dateRange, className }: KPIPerfo
 
   return (
     <div className={className}>
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Card>
           <CardHeader>
             <CardTitle className="text-lg font-medium">
@@ -163,6 +164,8 @@ export const KPIPerformanceCharts = ({ kpiName, dateRange, className }: KPIPerfo
             </div>
           </CardContent>
         </Card>
+
+        {kpiName === "Fulfilment %" && <OrderMilestonesChart />}
       </div>
     </div>
   );
