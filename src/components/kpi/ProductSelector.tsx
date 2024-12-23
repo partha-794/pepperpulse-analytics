@@ -13,7 +13,7 @@ interface ProductSelectorProps {
 }
 
 // Sample product titles
-const productTitles = [
+export const productTitles = [
   "All Products",
   "Dining Chair",
   "Coffee Table",

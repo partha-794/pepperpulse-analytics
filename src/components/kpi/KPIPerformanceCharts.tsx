@@ -3,6 +3,8 @@ import { format, subMonths, eachDayOfInterval, eachMonthOfInterval, startOfMonth
 import { OrderMilestonesChart } from "../charts/OrderMilestonesChart";
 import { DailyPerformanceChart } from "./DailyPerformanceChart";
 import { MonthlyPerformanceChart } from "./MonthlyPerformanceChart";
+import { ProductPerformanceChart } from "./ProductPerformanceChart";
+import { productTitles } from "./ProductSelector";
 
 interface KPIPerformanceChartsProps {
   kpiName: string;
@@ -63,9 +65,21 @@ export const KPIPerformanceCharts = ({ kpiName, dateRange, className }: KPIPerfo
     }));
   };
 
+  // Generate product-wise data
+  const generateProductData = () => {
+    console.log(`Generating product-wise data for ${kpiName}`);
+    return productTitles
+      .filter(product => product !== "All Products")
+      .map(product => ({
+        product,
+        value: generateSampleData(kpiName, 0, product)
+      }));
+  };
+
   // Generate data independently for each chart
   const dailyData = generateDailyData();
   const monthlyData = generateMonthlyData();
+  const productData = generateProductData();
 
   const formatValue = (value: number) => {
     switch (kpiName) {
@@ -86,7 +100,7 @@ export const KPIPerformanceCharts = ({ kpiName, dateRange, className }: KPIPerfo
 
   return (
     <div className={className}>
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <DailyPerformanceChart
           kpiName={kpiName}
           dailyData={dailyData}
@@ -103,6 +117,14 @@ export const KPIPerformanceCharts = ({ kpiName, dateRange, className }: KPIPerfo
           formatValue={formatValue}
           yAxisDomain={getYAxisDomain(monthlyData)}
         />
+        {kpiName !== "Fulfilment %" && (
+          <ProductPerformanceChart
+            kpiName={kpiName}
+            productData={productData}
+            formatValue={formatValue}
+            yAxisDomain={getYAxisDomain(productData)}
+          />
+        )}
         {kpiName === "Fulfilment %" && <OrderMilestonesChart />}
       </div>
     </div>
