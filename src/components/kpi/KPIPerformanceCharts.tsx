@@ -13,6 +13,7 @@ interface KPIPerformanceChartsProps {
 export const KPIPerformanceCharts = ({ kpiName, dateRange, className }: KPIPerformanceChartsProps) => {
   console.log(`Rendering charts for KPI: ${kpiName}`);
 
+  // Separate state for each chart's product selection
   const [selectedDailyProduct, setSelectedDailyProduct] = useState("All Products");
   const [selectedMonthlyProduct, setSelectedMonthlyProduct] = useState("All Products");
 
