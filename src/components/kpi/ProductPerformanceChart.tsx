@@ -32,7 +32,7 @@ export const ProductPerformanceChart = ({
             <BarChart 
               data={productData} 
               layout="vertical"
-              margin={{ top: 10, right: 30, left: 120, bottom: 30 }}
+              margin={{ top: 10, right: 30, left: 80, bottom: 30 }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" horizontal={true} />
               <XAxis
@@ -52,7 +52,7 @@ export const ProductPerformanceChart = ({
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
-                width={110}
+                width={70}
               />
               <ChartTooltip />
               <Bar
