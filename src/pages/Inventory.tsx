@@ -9,8 +9,8 @@ import { StatsCard } from "@/components/dashboard/StatsCard";
 import { DateRange } from "react-day-picker";
 import { InventoryStockChart } from "@/components/inventory/InventoryStockChart";
 import { StockoutHeatmap } from "@/components/inventory/StockoutHeatmap";
-import { ProductPerformanceChart } from "@/components/inventory/ProductPerformanceChart";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const Inventory = () => {
   const [date, setDate] = useState<DateRange>({
@@ -18,7 +18,14 @@ const Inventory = () => {
     to: new Date(),
   });
 
-  // Mock data for demonstration
+  // Sample data for Average Inventory Days
+  const averageInventoryData = [
+    { name: 'Bed Frame', avgDays: 85 },
+    { name: 'Sofa Set', avgDays: 72 },
+    { name: 'Study Desk', avgDays: 65 },
+    { name: 'Bookshelf', avgDays: 45 },
+  ].sort((a, b) => b.avgDays - a.avgDays);
+
   const inventoryStats = [
     {
       title: "Total Products",
@@ -74,12 +81,38 @@ const Inventory = () => {
             <InventoryStockChart />
           </Card>
           <Card className="p-6">
-            <h3 className="text-lg font-semibold mb-4">Stockout Patterns</h3>
-            <StockoutHeatmap />
+            <h3 className="text-lg font-semibold mb-4">Average Inventory Days</h3>
+            <div className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={averageInventoryData}
+                  margin={{ top: 20, right: 30, left: 60, bottom: 5 }}
+                  layout="vertical"
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    type="number"
+                    label={{ value: 'Days', position: 'insideBottom', offset: -5 }}
+                  />
+                  <YAxis 
+                    type="category" 
+                    dataKey="name" 
+                    width={100}
+                  />
+                  <Tooltip
+                    formatter={(value) => [`${value} days`, 'Average Days in Inventory']}
+                  />
+                  <Bar 
+                    dataKey="avgDays" 
+                    fill="#4f46e5" 
+                    name="Average Days in Inventory"
+                    radius={[0, 4, 4, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </Card>
         </div>
-
-        <ProductPerformanceChart />
 
         <Card className="p-6">
           <div className="flex items-center justify-between mb-6">
