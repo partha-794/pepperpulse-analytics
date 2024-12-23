@@ -41,28 +41,28 @@ export const KPIPerformanceCharts = ({ kpiName, dateRange, className }: KPIPerfo
     }
   };
 
-  // Generate daily data for the selected date range and product
-  const generateDailyData = (productTitle: string) => {
+  // Generate daily data specifically for the daily chart's selected product
+  const generateDailyData = () => {
     return eachDayOfInterval({ start: dateRange.from, end: dateRange.to })
       .map(date => ({
         date: format(date, "yyyy-MM-dd"),
-        value: generateSampleData(kpiName, 0, productTitle)
+        value: generateSampleData(kpiName, 0, selectedDailyProduct)
       }));
   };
 
-  // Generate monthly data for the last 5 months and product
-  const generateMonthlyData = (productTitle: string) => {
+  // Generate monthly data specifically for the monthly chart's selected product
+  const generateMonthlyData = () => {
     return eachMonthOfInterval({
       start: subMonths(startOfMonth(new Date()), 4),
       end: new Date()
     }).map(date => ({
       date: format(date, "MMM"),
-      value: generateSampleData(kpiName, 0, productTitle)
+      value: generateSampleData(kpiName, 0, selectedMonthlyProduct)
     }));
   };
 
-  const dailyData = generateDailyData(selectedDailyProduct);
-  const monthlyData = generateMonthlyData(selectedMonthlyProduct);
+  const dailyData = generateDailyData();
+  const monthlyData = generateMonthlyData();
 
   const formatValue = (value: number) => {
     switch (kpiName) {
@@ -75,16 +75,11 @@ export const KPIPerformanceCharts = ({ kpiName, dateRange, className }: KPIPerfo
     }
   };
 
-  const getYAxisDomain = () => {
-    const maxValue = Math.max(
-      ...dailyData.map(item => item.value),
-      ...monthlyData.map(item => item.value)
-    );
+  const getYAxisDomain = (data: Array<{ value: number }>) => {
+    const maxValue = Math.max(...data.map(item => item.value));
     const step = Math.ceil(maxValue / 5);
     return [0, Math.ceil(maxValue / step) * step] as [number, number];
   };
-
-  const yAxisDomain = getYAxisDomain();
 
   return (
     <div className={className}>
@@ -95,7 +90,7 @@ export const KPIPerformanceCharts = ({ kpiName, dateRange, className }: KPIPerfo
           selectedProduct={selectedDailyProduct}
           onProductSelect={setSelectedDailyProduct}
           formatValue={formatValue}
-          yAxisDomain={yAxisDomain}
+          yAxisDomain={getYAxisDomain(dailyData)}
         />
         <MonthlyPerformanceChart
           kpiName={kpiName}
@@ -103,7 +98,7 @@ export const KPIPerformanceCharts = ({ kpiName, dateRange, className }: KPIPerfo
           selectedProduct={selectedMonthlyProduct}
           onProductSelect={setSelectedMonthlyProduct}
           formatValue={formatValue}
-          yAxisDomain={yAxisDomain}
+          yAxisDomain={getYAxisDomain(monthlyData)}
         />
         {kpiName === "Fulfilment %" && <OrderMilestonesChart />}
       </div>
