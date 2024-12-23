@@ -33,13 +33,23 @@ export const ProductPerformanceChart = () => {
               <Tooltip
                 formatter={(value, name) => [
                   name === 'turnoverRate' ? `${(Number(value) * 100).toFixed(1)}%` : value,
-                  name === 'turnoverRate' ? 'Turnover Rate' : 'Sales'
+                  name === 'turnoverRate' ? 'Turnover Rate' : 'Sales Volume (units)'
                 ]}
               />
-              <Bar dataKey="sales" fill="#4f46e5" name="Sales" />
-              <Bar dataKey="turnoverRate" fill="#22c55e" name="Turnover Rate" />
+              <Bar dataKey="sales" fill="#4f46e5" name="Sales Volume (units)" />
+              <Bar dataKey="turnoverRate" fill="#22c55e" name="Turnover Rate (%)" />
             </BarChart>
           </ResponsiveContainer>
+        </div>
+        <div className="mt-4 flex items-center justify-center gap-6 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <div className="h-3 w-3 rounded-full bg-[#4f46e5]" />
+            <span>Sales Volume (units)</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="h-3 w-3 rounded-full bg-[#22c55e]" />
+            <span>Turnover Rate (%)</span>
+          </div>
         </div>
       </CardContent>
     </Card>
