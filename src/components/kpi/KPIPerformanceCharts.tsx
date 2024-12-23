@@ -73,7 +73,7 @@ export const KPIPerformanceCharts = ({ kpiName, dateRange, className }: KPIPerfo
 
   return (
     <div className={className}>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle className="text-lg font-medium">
