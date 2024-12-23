@@ -7,6 +7,10 @@ import { addDays } from "date-fns";
 import { Card } from "@/components/ui/card";
 import { StatsCard } from "@/components/dashboard/StatsCard";
 import { DateRange } from "react-day-picker";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Inventory = () => {
   const [date, setDate] = useState<DateRange>({
@@ -43,6 +47,67 @@ const Inventory = () => {
     { name: "Bed Frame", sku: "BF-203", stock: 2, reorderPoint: 5 },
     { name: "Sofa Set", sku: "SS-405", stock: 1, reorderPoint: 3 },
   ];
+
+  const orderMilestonesData = {
+    labels: [
+      'Order Received',
+      'Order Processed',
+      'Order Packed',
+      'Ready for Dispatch',
+      'In Transit',
+      'Out for Delivery',
+      'Delivered',
+      'Failed Delivery Attempt',
+      'Cancelled',
+      'Returned',
+      'Refunded'
+    ],
+    datasets: [{
+      data: [150, 130, 120, 100, 80, 60, 500, 20, 30, 25, 15],
+      backgroundColor: [
+        '#4f46e5', // indigo-600
+        '#6366f1', // indigo-500
+        '#818cf8', // indigo-400
+        '#a5b4fc', // indigo-300
+        '#c7d2fe', // indigo-200
+        '#e0e7ff', // indigo-100
+        '#22c55e', // green-500
+        '#f43f5e', // rose-500
+        '#64748b', // slate-500
+        '#f59e0b', // amber-500
+        '#ef4444', // red-500
+      ],
+      borderWidth: 1
+    }]
+  };
+
+  const pieChartOptions = {
+    plugins: {
+      legend: {
+        position: 'right' as const,
+        labels: {
+          boxWidth: 15,
+          padding: 15,
+          font: {
+            size: 12
+          }
+        }
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context: any) {
+            const label = context.label || '';
+            const value = context.raw || 0;
+            const total = context.dataset.data.reduce((a: number, b: number) => a + b, 0);
+            const percentage = ((value / total) * 100).toFixed(1);
+            return `${label}: ${value} (${percentage}%)`;
+          }
+        }
+      }
+    },
+    maintainAspectRatio: false,
+    cutout: '0%'
+  };
 
   return (
     <DashboardLayout>
@@ -90,8 +155,8 @@ const Inventory = () => {
           />
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <Card className="p-6">
+        <div className="grid gap-6 md:grid-cols-3">
+          <Card className="p-6 col-span-2">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold">Low Stock Alerts</h3>
               <AlertTriangle className="h-5 w-5 text-yellow-500" />
@@ -118,45 +183,40 @@ const Inventory = () => {
           </Card>
 
           <Card className="p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold">Recent Activities</h3>
-              <Package2 className="h-5 w-5 text-muted-foreground" />
-            </div>
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">Today</p>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/50">
-                    <div className="flex items-center gap-2">
-                      <PackageOpen className="h-4 w-4 text-green-500" />
-                      <span className="text-sm">Stock received: 50x Dining Chairs</span>
-                    </div>
-                    <span className="text-xs text-muted-foreground">2 hours ago</span>
-                  </div>
-                  <div className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/50">
-                    <div className="flex items-center gap-2">
-                      <Package2 className="h-4 w-4 text-blue-500" />
-                      <span className="text-sm">Order fulfilled: 5x Coffee Tables</span>
-                    </div>
-                    <span className="text-xs text-muted-foreground">4 hours ago</span>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">Yesterday</p>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/50">
-                    <div className="flex items-center gap-2">
-                      <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                      <span className="text-sm">Low stock alert: Bed Frames</span>
-                    </div>
-                    <span className="text-xs text-muted-foreground">1 day ago</span>
-                  </div>
-                </div>
-              </div>
+            <h3 className="text-lg font-semibold mb-6">Order Milestones</h3>
+            <div className="relative h-[400px]">
+              <Pie data={orderMilestonesData} options={pieChartOptions} />
             </div>
           </Card>
         </div>
+
+        <Card className="p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-lg font-semibold">Recent Activities</h3>
+            <Package2 className="h-5 w-5 text-muted-foreground" />
+          </div>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <p className="text-sm text-muted-foreground">Today</p>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/50">
+                  <div className="flex items-center gap-2">
+                    <PackageOpen className="h-4 w-4 text-green-500" />
+                    <span className="text-sm">Stock received: 50x Dining Chairs</span>
+                  </div>
+                  <span className="text-xs text-muted-foreground">2 hours ago</span>
+                </div>
+                <div className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/50">
+                  <div className="flex items-center gap-2">
+                    <Package2 className="h-4 w-4 text-blue-500" />
+                    <span className="text-sm">Order fulfilled: 5x Coffee Tables</span>
+                  </div>
+                  <span className="text-xs text-muted-foreground">4 hours ago</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
       </div>
     </DashboardLayout>
   );
