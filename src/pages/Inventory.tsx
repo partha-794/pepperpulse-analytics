@@ -26,6 +26,34 @@ const Inventory = () => {
     { name: 'Bookshelf', avgDays: 45 },
   ].sort((a, b) => b.avgDays - a.avgDays);
 
+  // Sample data for slow-moving SKUs
+  const slowMovingSkus = [
+    { 
+      name: "Vintage Armchair",
+      sku: "VA-001",
+      daysInStock: 120,
+      lastSaleDate: "2023-12-15",
+      currentStock: 8,
+      salesLast30Days: 1
+    },
+    { 
+      name: "Crystal Chandelier",
+      sku: "CC-102",
+      daysInStock: 95,
+      lastSaleDate: "2023-12-28",
+      currentStock: 5,
+      salesLast30Days: 2
+    },
+    { 
+      name: "Leather Ottoman",
+      sku: "LO-203",
+      daysInStock: 85,
+      lastSaleDate: "2024-01-05",
+      currentStock: 12,
+      salesLast30Days: 1
+    }
+  ];
+
   const inventoryStats = [
     {
       title: "Total Products",
@@ -113,6 +141,37 @@ const Inventory = () => {
             </div>
           </Card>
         </div>
+
+        <Card className="p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-lg font-semibold">Slow-Moving SKUs</h3>
+            <AlertTriangle className="h-5 w-5 text-yellow-500" />
+          </div>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Product Name</TableHead>
+                <TableHead>SKU</TableHead>
+                <TableHead>Days in Stock</TableHead>
+                <TableHead>Last Sale Date</TableHead>
+                <TableHead>Current Stock</TableHead>
+                <TableHead>Sales (Last 30 Days)</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {slowMovingSkus.map((item) => (
+                <TableRow key={item.sku}>
+                  <TableCell className="font-medium">{item.name}</TableCell>
+                  <TableCell>{item.sku}</TableCell>
+                  <TableCell>{item.daysInStock}</TableCell>
+                  <TableCell>{item.lastSaleDate}</TableCell>
+                  <TableCell>{item.currentStock}</TableCell>
+                  <TableCell>{item.salesLast30Days}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Card>
 
         <Card className="p-6">
           <div className="flex items-center justify-between mb-6">
