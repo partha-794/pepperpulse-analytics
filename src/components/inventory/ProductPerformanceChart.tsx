@@ -2,10 +2,8 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-// Sample data - in a real app, this would come from your backend
+// Sample data - filtered to show only slow-moving products (turnover rate < 0.5)
 const productPerformanceData = [
-  { name: 'Dining Chair', sales: 120, turnoverRate: 0.8 },
-  { name: 'Coffee Table', sales: 85, turnoverRate: 0.6 },
   { name: 'Bed Frame', sales: 65, turnoverRate: 0.4 },
   { name: 'Sofa Set', sales: 45, turnoverRate: 0.3 },
   { name: 'Study Desk', sales: 25, turnoverRate: 0.2 },
@@ -16,7 +14,10 @@ export const ProductPerformanceChart = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Product Performance</CardTitle>
+        <CardTitle>Slow-Moving Products</CardTitle>
+        <p className="text-sm text-muted-foreground">
+          Products with turnover rate below 50% in the last 30 days
+        </p>
       </CardHeader>
       <CardContent>
         <div className="h-[400px] w-full">
