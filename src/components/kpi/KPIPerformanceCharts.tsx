@@ -41,8 +41,9 @@ export const KPIPerformanceCharts = ({ kpiName, dateRange, className }: KPIPerfo
     }
   };
 
-  // Generate daily data specifically for the daily chart's selected product
+  // Generate daily data with its own product selection
   const generateDailyData = () => {
+    console.log(`Generating daily data for product: ${selectedDailyProduct}`);
     return eachDayOfInterval({ start: dateRange.from, end: dateRange.to })
       .map(date => ({
         date: format(date, "yyyy-MM-dd"),
@@ -50,8 +51,9 @@ export const KPIPerformanceCharts = ({ kpiName, dateRange, className }: KPIPerfo
       }));
   };
 
-  // Generate monthly data specifically for the monthly chart's selected product
+  // Generate monthly data with its own product selection
   const generateMonthlyData = () => {
+    console.log(`Generating monthly data for product: ${selectedMonthlyProduct}`);
     return eachMonthOfInterval({
       start: subMonths(startOfMonth(new Date()), 4),
       end: new Date()
@@ -61,6 +63,7 @@ export const KPIPerformanceCharts = ({ kpiName, dateRange, className }: KPIPerfo
     }));
   };
 
+  // Generate data independently for each chart
   const dailyData = generateDailyData();
   const monthlyData = generateMonthlyData();
 
