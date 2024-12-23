@@ -25,19 +25,31 @@ export const ProductPerformanceChart = () => {
             <BarChart
               data={productPerformanceData}
               margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-              layout="vertical"
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis type="number" />
-              <YAxis dataKey="name" type="category" width={100} />
+              <XAxis dataKey="name" />
+              <YAxis 
+                yAxisId="sales"
+                orientation="left"
+                stroke="#4f46e5"
+                label={{ value: 'Sales Volume (units)', angle: -90, position: 'insideLeft' }}
+              />
+              <YAxis
+                yAxisId="turnover"
+                orientation="right"
+                stroke="#22c55e"
+                tickFormatter={(value) => `${(value * 100).toFixed(0)}%`}
+                domain={[0, 0.5]}
+                label={{ value: 'Turnover Rate (%)', angle: 90, position: 'insideRight' }}
+              />
               <Tooltip
                 formatter={(value, name) => [
                   name === 'turnoverRate' ? `${(Number(value) * 100).toFixed(1)}%` : value,
                   name === 'turnoverRate' ? 'Turnover Rate' : 'Sales Volume (units)'
                 ]}
               />
-              <Bar dataKey="sales" fill="#4f46e5" name="Sales Volume (units)" />
-              <Bar dataKey="turnoverRate" fill="#22c55e" name="Turnover Rate (%)" />
+              <Bar yAxisId="sales" dataKey="sales" fill="#4f46e5" name="Sales Volume (units)" />
+              <Bar yAxisId="turnover" dataKey="turnoverRate" fill="#22c55e" name="Turnover Rate" />
             </BarChart>
           </ResponsiveContainer>
         </div>
