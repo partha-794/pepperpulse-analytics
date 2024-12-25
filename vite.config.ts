@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "/pepperfry-analytics/", // Set base URL for deployment
+  base: "/", // Set base URL for deployment
   server: {
     host: "::",
     port: 8080,
