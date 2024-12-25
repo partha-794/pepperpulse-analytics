@@ -16,7 +16,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename="/pepperfry-analytics">
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/query-performance" element={<QueryPerformance />} />
